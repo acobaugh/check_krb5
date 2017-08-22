@@ -43,9 +43,10 @@ func main() {
 		args.Warn = "1s"
 	}
 	if args.Crit == "" {
-		args.Crit = "1s"
+		args.Crit = "5s"
 	}
 
+	// parse interval, warn, crit into time.Duration
 	interval, err := time.ParseDuration(args.Interval)
 	if err != nil {
 		nagios.Unknown(fmt.Sprintf("%s", err))
@@ -57,6 +58,11 @@ func main() {
 	crit, err = time.ParseDuration(args.Crit)
 	if err != nil {
 		nagios.Unknown(fmt.Sprintf("%s", err))
+	}
+
+	// sanity-check warn/crit
+	if (crit < warn) {
+		nagios.Unknown("Critical threshold must be less than Warning")
 	}
 
 	// create a shared context
