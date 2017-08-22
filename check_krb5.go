@@ -24,7 +24,7 @@ type Args struct {
 }
 
 func (Args) Version() string {
-	return os.Args[0] + " 0.1"
+	return os.Args[0] + " 0.1\nhttps://github.com/cobaugh/check_krb5"
 }
 
 func main() {
