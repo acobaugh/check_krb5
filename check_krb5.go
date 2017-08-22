@@ -17,7 +17,7 @@ type Args struct {
 	Password string `arg:"-P"`
 	Client   string `arg:"-c,required"`
 	Service  string `arg:"-s,required"`
-	Count    int    `arg:"-c:Number of checks to perform"`
+	Count    int    `arg:"-n:Number of checks to perform"`
 	Interval string `arg:"-i,help:Time to wait between each check"`
 	Warn     string `arg:"-W,help:Warning threshold"`
 	Crit     string `arg:"-C,help:Critical threshold"`
