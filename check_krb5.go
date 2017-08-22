@@ -61,10 +61,10 @@ func main() {
 	}
 
 	// sanity-check options
-	if (crit < warn) {
+	if crit < warn {
 		nagios.Unknown("Critical threshold must be less than Warning")
 	}
-	if (args.Count < 1) {
+	if args.Count < 1 {
 		nagios.Unknown("Count must be >=1")
 	}
 
@@ -130,7 +130,11 @@ func main() {
 	}
 	avg := sum / time.Duration((args.Count))
 
-	perfdata := fmt.Sprintf("t_avg=%f:%f:%f:%f:%f", avg.Seconds(), warn.Seconds(), crit.Seconds(), min.Seconds(), max.Seconds())
+	perfdata := fmt.Sprintf("avg=%f:%f:%f min=%f:%f:%f max=%f:%f:%f",
+		avg.Seconds(), warn.Seconds(), crit.Seconds(),
+		min.Seconds(), warn.Seconds(), crit.Seconds(),
+		max.Seconds(), warn.Seconds(), crit.Seconds(),
+	)
 	status := fmt.Sprintf("Authenticated as %s to %s (avg: %v, min: %v, max: %v, i: %d) | %s\n",
 		args.Client, args.Service, avg, min, max, args.Count, perfdata)
 
