@@ -60,9 +60,12 @@ func main() {
 		nagios.Unknown(fmt.Sprintf("%s", err))
 	}
 
-	// sanity-check warn/crit
+	// sanity-check options
 	if (crit < warn) {
 		nagios.Unknown("Critical threshold must be less than Warning")
+	}
+	if (args.Count < 1) {
+		nagios.Unknown("Count must be >=1")
 	}
 
 	// create a shared context
@@ -75,7 +78,7 @@ func main() {
 	// check for keytab or password
 	var keytab *krb5.KeyTab
 	if args.Keytab != "" {
-		keytab, err := ctx.OpenKeyTab(args.Keytab)
+		keytab, err = ctx.OpenKeyTab(args.Keytab)
 		if err != nil {
 			nagios.Unknown(fmt.Sprintf("OpenKeyTab(): %s", err))
 		}
